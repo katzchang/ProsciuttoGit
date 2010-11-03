@@ -21,7 +21,7 @@ Getting Started
 -------
 1. Open Preferences > ProsciuttoGit.
 2. add Author and Committer settings.
-3. run JUnit test runner in gitteed project, and you'll see how it works.
+3. run JUnit test runner in gitted project, and you'll see how it works.
 
 Warning
 -------
