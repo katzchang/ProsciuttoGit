@@ -23,6 +23,13 @@ Getting Started
 2. add Author and Committer settings.
 3. run JUnit test runner in gitteed project, and you'll see how it works.
 
+Warning
+-------
+ * このプラグインは評価版です。意味不明でも仕方がありません。
+ * テストを実行するプロジェクトがgitレポジトリではない場合、恐らく、よくないことが起こります。
+ * 真面目なプロジェクトへの適用は慎重であるべきです。ガリガリコミットされてしまいます。
+ * たとえばmasterで作業している場合、危険かもしれません。branchを作成して移動すれば、幾分安心できるかもしれません。
+
 License
 -------
 評価版であり、ライセンスは未定。
