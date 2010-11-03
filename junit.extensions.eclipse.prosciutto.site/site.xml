@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
+   <description name="Prosciutto Git update site" url="http://github.com/katzchang/ProsciuttoGit/raw/master/junit.extensions.eclipse.prosciutto.site/">
+      Prosciutto Git update site
+   </description>
+   <feature url="features/junit.extensions.eclipse.prosciutto.feature_0.0.0.201011032219.jar" id="junit.extensions.eclipse.prosciutto.feature" version="0.0.0.201011032219">
+      <category name="ProsciuttoGit"/>
+   </feature>
+   <archive path=".project" url="http://github.com/katzchang/ProsciuttoGit/raw/master/junit.extensions.eclipse.prosciutto.site/.project"/>
+   <archive path="site.xml" url="http://github.com/katzchang/ProsciuttoGit/raw/master/junit.extensions.eclipse.prosciutto.site/site.xml"/>
+   <category-def name="ProsciuttoGit" label="Prosciutto Git"/>
 </site>
