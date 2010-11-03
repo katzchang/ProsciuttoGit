@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+<!--
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Sample Category"
+            id="junit.extensions.eclipse.prosciutto.commands.category">
+      </category>
+      <command
+            name="Sample Command"
+            categoryId="junit.extensions.eclipse.prosciutto.commands.category"
+            id="junit.extensions.eclipse.prosciutto.commands.sampleCommand">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="junit.extensions.eclipse.prosciutto.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="Sample Menu"
+               mnemonic="M"
+               id="junit.extensions.eclipse.prosciutto.menus.sampleMenu">
+            <command
+                  commandId="junit.extensions.eclipse.prosciutto.commands.sampleCommand"
+                  mnemonic="S"
+                  id="junit.extensions.eclipse.prosciutto.menus.sampleCommand">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="junit.extensions.eclipse.prosciutto.toolbars.sampleToolbar">
+            <command
+                  commandId="junit.extensions.eclipse.prosciutto.commands.sampleCommand"
+                  icon="icons/sample.gif"
+                  tooltip="Say hello world"
+                  id="junit.extensions.eclipse.prosciutto.toolbars.sampleCommand">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+-->
+   <extension
+         point="org.eclipse.jdt.junit.testRunListeners">
+      <testRunListener
+            class="junit.extensions.eclipse.prosciutto.internal.TestRunListener">
+      </testRunListener>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="junit.extensions.eclipse.prosciutto.internal.preferences.ProsciuttoGitPreferencePage"
+            id="junit.extensions.eclipse.prosciutto.internal.preferences.ProsciuttoGitPreferencePage"
+            name="ProsciuttoGit">
+      </page>
+   </extension>
+
+</plugin>
