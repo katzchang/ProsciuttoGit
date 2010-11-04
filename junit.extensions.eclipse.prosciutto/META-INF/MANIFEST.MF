@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Prosciutto
+Bundle-Name: ProsciuttoGit
 Bundle-SymbolicName: junit.extensions.eclipse.prosciutto; singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.0.0.qualifier
 Bundle-Activator: junit.extensions.eclipse.prosciutto.ProsciuttoActivator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -13,3 +13,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.core.resources
+Bundle-Vendor: katzchang.jp
