@@ -38,7 +38,7 @@ public class ProsciuttoGitPreferencePage
 	}
 	
 	public void init(IWorkbench workbench) {
-		// TODO should add validation 
+		// TODO should add validation? 
 		setValid(true);
 	}
 }

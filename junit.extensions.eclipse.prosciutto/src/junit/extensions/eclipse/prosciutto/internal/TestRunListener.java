@@ -32,9 +32,12 @@ public class TestRunListener extends org.eclipse.jdt.junit.TestRunListener {
 
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
+			Boolean enabled = Preference.ENABLED.getValue().equals("true");
+			if (!enabled) return Status.OK_STATUS;
+			
 			try {
-				String AUTHOR = Preference.AUTHOR.getValue();
-				String COMMITTER = Preference.COMMITTER.getValue();
+				String author = Preference.AUTHOR.getValue();
+				String committer = Preference.COMMITTER.getValue();
 				
 				String commitMessage = formatTestResult(session);
 				
@@ -61,7 +64,7 @@ public class TestRunListener extends org.eclipse.jdt.junit.TestRunListener {
 				
 				if (hasDiff) {
 					CommitOperation commitOperation = new CommitOperation(null, null, null,
-							AUTHOR, COMMITTER,
+							author, committer,
 							commitMessage);
 					commitOperation.setCommitAll(true);
 					commitOperation.setRepos(new Repository[]{repository});
@@ -69,7 +72,9 @@ public class TestRunListener extends org.eclipse.jdt.junit.TestRunListener {
 				}
 			} catch (Exception e) {
 				return new Status(Status.ERROR, ProsciuttoActivator.PLUGIN_ID,
-						"check Preferences > ProsciuttoGit > Autor and Committer settings.",e);
+						"check \n" +
+						" * running under git project" +
+						" * Preferences > ProsciuttoGit > Autor and Committer settings.",e);
 			}
 			return Status.OK_STATUS;
 		}

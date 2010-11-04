@@ -15,6 +15,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		IPreferenceStore store = ProsciuttoActivator.getDefault().getPreferenceStore();
 		store.setDefault(AUTHOR.name(), "");
 		store.setDefault(COMMITTER.name(), "");
+		store.setDefault(ENABLED.name(), false);
 	}
 
 }

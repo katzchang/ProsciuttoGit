@@ -10,7 +10,8 @@ import junit.extensions.eclipse.prosciutto.ProsciuttoActivator;
 public enum Preference {
 
 	AUTHOR,
-	COMMITTER
+	COMMITTER,
+	ENABLED
 	;
 	
 	public String getValue() {
@@ -21,6 +22,11 @@ public enum Preference {
 	public void setValue(String value){
 		IPreferenceStore store = ProsciuttoActivator.getDefault().getPreferenceStore();
 		store.setValue(name(), value);
+	}
+	
+	public void setValue(Boolean b){
+		IPreferenceStore store = ProsciuttoActivator.getDefault().getPreferenceStore();
+		store.setValue(name(), b);
 	}
 	
 }
