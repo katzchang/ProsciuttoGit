@@ -14,8 +14,12 @@ JUnit実行のたびに、勝手にコミットしていくEclipseプラグイ�
 
 コミットのメッセージなどはサンプルプロジェクトを参照のこと：[https://github.com/katzchang/HelloTDD](https://github.com/katzchang/HelloTDD)
 
-Update Site
+Install
 -------
+First, install EGit 0.9.3, which Prosciutto Git depends on, from update site.
+http://download.eclipse.org/egit/updates
+
+And then, install Presciutto Git.
 https://github.com/katzchang/ProsciuttoGit/raw/master/junit.extensions.eclipse.prosciutto.site
 
 Getting Started

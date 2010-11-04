@@ -23,6 +23,17 @@
 使用に際し発生した如何なる損害に対しても、作成者は責を負わない。
    </license>
 
+   <requires>
+      <import feature="org.eclipse.egit" version="0.9.3"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.egit.core" version="0.9.3" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jdt.junit" version="3.6.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jgit" version="0.9.3" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jdt.core" version="3.6.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.resources"/>
+   </requires>
+
    <plugin
          id="junit.extensions.eclipse.prosciutto"
          download-size="0"
