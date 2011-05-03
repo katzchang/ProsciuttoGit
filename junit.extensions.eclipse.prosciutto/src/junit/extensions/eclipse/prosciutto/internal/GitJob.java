@@ -12,6 +12,7 @@ import junit.extensions.eclipse.prosciutto.internal.preferences.Preference;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -51,12 +52,14 @@ public class GitJob extends Job {
 			File gitDir = new File(project.getLocation().toFile().toString() + "/.git");
 			Repository repository = new FileRepository(gitDir);
 			
+			File workTree = repository.getWorkTree();
+			IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 			AdaptableFileTreeIterator fileTreeIterator =
-				new AdaptableFileTreeIterator(repository.getWorkTree(),
-						ResourcesPlugin.getWorkspace().getRoot());
+				new AdaptableFileTreeIterator(workTree, workspaceRoot);
+			
 			IndexDiff indexDiff = new IndexDiff(repository, Constants.HEAD, fileTreeIterator);
 			boolean hasDiff = indexDiff.diff();
-			if (indexDiff.diff()) {
+			if (hasDiff) {
 				ArrayList<IResource> resources = new ArrayList<IResource>();
 				resources.addAll(includeList(project.getProject(), indexDiff.getAdded()));
 				resources.addAll(includeList(project.getProject(), indexDiff.getChanged()));
@@ -77,15 +80,18 @@ public class GitJob extends Job {
 				commitOperation.execute(null);
 			}
 		} catch (IOException e) {
-			return new Status(Status.ERROR, ProsciuttoActivator.PLUGIN_ID,
-					"check \n" +
-					"* JUnit test is running under git project.", e);
+			return errorStatus(e);
 		} catch (CoreException e) {
-			return new Status(Status.ERROR, ProsciuttoActivator.PLUGIN_ID,
-					"check \n" +
-					"* Preferences > ProsciuttoGit > Autor and Committer settings.", e);
+			return errorStatus(e);
 		}
 		return Status.OK_STATUS;
+	}
+
+	private IStatus errorStatus(Exception e) {
+		return new Status(Status.ERROR, ProsciuttoActivator.PLUGIN_ID,
+				"check \n" +
+				"* JUnit test is running under git project \n" +
+				"* Preferences > ProsciuttoGit > Autor and Committer settings.", e);
 	}
 
 	private List<IResource> includeList(IProject project, Set<String> added) {
@@ -101,8 +107,6 @@ public class GitJob extends Job {
 					.substring(repoRelativePath.length()));
 			if (!files.contains(member)) files.add(member);
 		}
-		System.out.println(files);
 		return files;
 	}
 }
-
