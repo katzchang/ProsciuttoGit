@@ -6,8 +6,10 @@ import java.util.List;
 import org.eclipse.jdt.junit.model.ITestElement;
 import org.eclipse.jdt.junit.model.ITestElementContainer;
 import org.eclipse.jdt.junit.model.ITestElement.Result;
+import org.eclipse.jdt.junit.model.ITestRunSession;
 
 public class TestCounter {
+	private final ITestRunSession session;
 	private List<String> elements = new ArrayList<String>();
 	private int totalTests;
 	private int okTests;
@@ -15,27 +17,31 @@ public class TestCounter {
 	private int ignoreTests;
 	private int errorTests;
 
-	public TestCounter(ITestElementContainer session) {
-		count(session);
+	public TestCounter(ITestRunSession session) {
+		this.session = session;
+		count(this, session);
 	}
 	
-	private void count(ITestElementContainer container) {
-		ITestElement[] children = container.getChildren();
+	private static void count(TestCounter counter, ITestElementContainer session) {
+		ITestElement[] children = session.getChildren();
 		if(children == null) return;
+		
 		for(ITestElement element : children){
 			if (element instanceof ITestElementContainer) {
-				ITestElementContainer cont = (ITestElementContainer) element;
-				count(cont);
+				ITestElementContainer container = (ITestElementContainer) element;
+				count(counter, container);
 				continue;
 			}
-			totalTests++;
+			
+			counter.totalTests++;
+			
 			Result result = element.getTestResult(false);
 			if(result == null) continue;
-			if(result.equals(Result.IGNORED)) ignoreTests++;
-			if(result.equals(Result.OK)) okTests++;
-			if(result.equals(Result.FAILURE)) failureTests++;
-			if(result.equals(Result.ERROR)) errorTests++;
-			elements.add(element.toString());
+			if(result.equals(Result.IGNORED)) counter.ignoreTests++;
+			if(result.equals(Result.OK)) counter.okTests++;
+			if(result.equals(Result.FAILURE)) counter.failureTests++;
+			if(result.equals(Result.ERROR)) counter.errorTests++;
+			counter.elements.add(element.toString());
 		}
 	}
 	
@@ -61,6 +67,25 @@ public class TestCounter {
 
 	public int getErrorTests() {
 		return errorTests;
+	}
+
+	public String toString() {
+		String elementTrace = "";
+		
+		for (String element : this.getElements())
+			elementTrace += element + "\n";
+		
+		String message = session.getTestRunName() + ":" + session.getTestResult(true) + ", "
+				+ "total:" + this.getTotalTests() + ", "
+				+ "pass:" + this.getOKTests() + ", "
+				+ "fail:" + this.getFailureTests() + ", "
+				+ "error:" + this.getErrorTests() + ", "
+				+ "ignore:" + this.getIgnoreTests();
+		
+		if (!elementTrace.isEmpty())
+			message += "\n\n" + elementTrace;
+		
+		return message;
 	}
 	
 }

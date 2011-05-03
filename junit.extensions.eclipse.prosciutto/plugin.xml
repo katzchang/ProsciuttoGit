@@ -22,8 +22,8 @@
       <key
             commandId="junit.extensions.eclipse.prosciutto.commands.theGratefulDead"
             contextId="org.eclipse.ui.contexts.window"
-            sequence="M1+6"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+6">
       </key>
    </extension>
       <extension

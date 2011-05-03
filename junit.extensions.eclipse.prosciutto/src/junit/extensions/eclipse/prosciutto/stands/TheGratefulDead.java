@@ -10,7 +10,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 public class TheGratefulDead extends AbstractHandler {
-
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		boolean state = HandlerUtil.toggleCommandState(event.getCommand());
@@ -22,5 +21,4 @@ public class TheGratefulDead extends AbstractHandler {
 //				""+Preference.ENABLED + ":" + Preference.ENABLED.getValue());
 		return null;
 	}
-
 }
