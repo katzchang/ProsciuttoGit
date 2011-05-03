@@ -27,6 +27,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 
 public class GitJob extends Job {
 	private final ITestRunSession session;
@@ -54,7 +55,7 @@ public class GitJob extends Job {
 			
 			File workTree = repository.getWorkTree();
 			IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-			AdaptableFileTreeIterator fileTreeIterator =
+			WorkingTreeIterator fileTreeIterator =
 				new AdaptableFileTreeIterator(workTree, workspaceRoot);
 			
 			IndexDiff indexDiff = new IndexDiff(repository, Constants.HEAD, fileTreeIterator);
