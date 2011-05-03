@@ -10,7 +10,6 @@ import junit.extensions.eclipse.prosciutto.ProsciuttoActivator;
 import junit.extensions.eclipse.prosciutto.internal.preferences.Preference;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -50,6 +49,7 @@ public class GitJob extends Job {
 			
 			IResource project = session.getLaunchedProject().getResource();
 			File gitDir = new File(project.getLocation().toFile().toString() + "/.git");
+			System.out.println("gitDir:" + gitDir);
 			Repository repository = new FileRepository(gitDir);
 			
 			File workTree = repository.getWorkTree();
@@ -58,19 +58,28 @@ public class GitJob extends Job {
 				new AdaptableFileTreeIterator(workTree, workspaceRoot);
 			
 			IndexDiff indexDiff = new IndexDiff(repository, Constants.HEAD, fileTreeIterator);
+			
+			System.out.println("1.indexDiff.diff():" + indexDiff.diff());
+			System.out.println("2.indexDiff.diff():" + indexDiff.diff());
+			
 			boolean hasDiff = indexDiff.diff();
+			System.out.println("3.hasDiff:" + indexDiff.diff());
+			System.out.println("4.indexDiff.diff():" + indexDiff.diff());
 			if (hasDiff) {
 				ArrayList<IResource> resources = new ArrayList<IResource>();
-				resources.addAll(includeList(project.getProject(), indexDiff.getAdded()));
-				resources.addAll(includeList(project.getProject(), indexDiff.getChanged()));
-				resources.addAll(includeList(project.getProject(), indexDiff.getRemoved()));
-				resources.addAll(includeList(project.getProject(), indexDiff.getMissing()));
-				resources.addAll(includeList(project.getProject(), indexDiff.getModified()));
-				resources.addAll(includeList(project.getProject(), indexDiff.getUntracked()));
+				
+				resources.addAll(files(project, indexDiff.getAdded()));
+				resources.addAll(files(project, indexDiff.getChanged()));
+				resources.addAll(files(project, indexDiff.getRemoved()));
+				resources.addAll(files(project, indexDiff.getMissing()));
+				resources.addAll(files(project, indexDiff.getModified()));
+				resources.addAll(files(project, indexDiff.getUntracked()));
 
 				new AddToIndexOperation(resources).execute(null);
+				System.out.println("add:" + resources);
 			}
 			
+			System.out.println("5.indexDiff.diff():" + indexDiff.diff());
 			if (hasDiff) {
 				CommitOperation commitOperation = new CommitOperation(null, null, null,
 						author, committer,
@@ -94,16 +103,17 @@ public class GitJob extends Job {
 				"* Preferences > ProsciuttoGit > Autor and Committer settings.", e);
 	}
 
-	private List<IResource> includeList(IProject project, Set<String> added) {
+	private List<IResource> files(IResource project, Set<String> diffs) {
+		System.out.println("diffs:" + diffs);
 		ArrayList<IResource> files = new ArrayList<IResource>();
 		
 		String repoRelativePath = RepositoryMapping.getMapping(project)
 				.getRepoRelativePath(project);
 		if (repoRelativePath.isEmpty()) repoRelativePath += "/";
 		
-		for (String filename : added) {
+		for (String filename : diffs) {
 			if (!filename.startsWith(repoRelativePath)) continue;
-			IFile member = project.getFile(filename
+			IFile member = project.getProject().getFile(filename
 					.substring(repoRelativePath.length()));
 			if (!files.contains(member)) files.add(member);
 		}
